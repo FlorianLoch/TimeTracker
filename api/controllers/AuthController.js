@@ -45,12 +45,17 @@ module.exports = {
 					return res.status(401).send();
 				}
 
+				req.session.me = ["email", "firstName", "lastName"].map(function (key) {
+					return user[key];
+				});
+
 				res.ok();
 			});
 		});
 	},
 	logout: function (req, res) {
 		req.session.authenticated = false;
+		delete req.session.me;
 		res.ok();
 	}
 };

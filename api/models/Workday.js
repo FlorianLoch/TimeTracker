@@ -5,6 +5,8 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+const DEFAULT_WORKHOURS = 0;
+
 module.exports = {
 
   attributes: {
@@ -25,12 +27,40 @@ module.exports = {
     comment: {
       type: "string",
       size: 512,
-      maxLength: 512
+      maxLength: 512,
+      defaultsTo: ""
     }
   },
-  createWorkWeek: function (userId, cb) {
-    
+  /**
+    @arg {number|Object} userId
+    @arg {number} time UNIX timestamp; the beginning of the belonging week gets computed
+    @arg {function} cb Callback, err is the only parameter given
+  */
+  createWorkweek: function (userId, time, cb) {
+    if (userId instanceof User) {
+      userId = userId.id;
+    }
 
-    //Create workdays for the current week
+    var weekdays = DateHelper.weekdaysInWeek(time);
+
+    createWeekday(0);
+
+    function createWeekday(index) {
+      if (index === 5) {
+        return cb(null);
+      }
+
+      Workday.create({
+        day: weekdays[index],
+        userId: userId,
+        workhours: DEFAULT_WORKHOURS
+      }).exec(function (err) {
+        if (err) {
+          return cb(err);
+        }
+
+        createWeekday(index + 1);
+      });
+    }
   }
 };
