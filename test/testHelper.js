@@ -1,6 +1,6 @@
 module.exports = {
   createSampleUser: function (userId, cb) {
-    User.create({
+    User.findOrCreate({
       email: "test@example.com",
       firstName: "John",
       lastName: "Doe",

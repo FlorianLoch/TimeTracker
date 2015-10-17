@@ -62,5 +62,22 @@ module.exports = {
         createWeekday(index + 1);
       });
     }
+  },
+  /**
+    @arg {number|Object} userId
+    @arg {function} cb Callback, (err, workday)
+  */
+  getMostRecentWorkday: function (userId, cb) {
+    Workday.find({
+      where: {
+        userId: userId
+      },
+      sort: "day DESC",
+      limit: 1
+    }).exec(function (err, workday) {
+      console.log("REACHED");
+      console.log(workday);
+      cb(err, workday[0]);
+    });
   }
 };
