@@ -37,7 +37,7 @@ module.exports = {
     @arg {function} cb Callback, err is the only parameter given
   */
   createWorkweek: function (userId, time, cb) {
-    if (userId instanceof User) {
+    if (typeof userId === "object") {
       userId = userId.id;
     }
 
