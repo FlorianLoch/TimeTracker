@@ -8,7 +8,7 @@ describe("Workday-Model", function () {
     testHelper.createSampleUser(1, done);
   });
 
-  describe("#createWorkweek()", function () {
+  describe("createWorkweek()", function () {
     beforeEach(function (done) {
         Workday.destroy().exec(done);
     });
@@ -26,7 +26,7 @@ describe("Workday-Model", function () {
     });
   });
 
-  describe("#getMostRecentWeekday", function () {
+  describe("getMostRecentWeekday", function () {
     before(function (done) {
       Workday.destroy().exec(done);
     });
@@ -50,6 +50,35 @@ describe("Workday-Model", function () {
     it("shall return the most recent workday", function (done) {
       Workday.getMostRecentWorkday(1, function (err, workday) {
         expect(workday.day).to.be.equal(Date.UTC(2015, 9, 17));
+        done();
+      });
+    });
+  });
+
+  describe("getWorkweek()", function () {
+    beforeEach(function (done) {
+      Workday.destroy().exec(done);
+    });
+
+    it("shall find the created workweek", function (done) {
+      var time = Date.UTC(2015, 9, 18);
+
+      Workday.createWorkweek(1, time, function () {
+        Workday.getWorkweek(1, time, function (err, workdays) {
+          expect(err).to.be.null;
+          expect(workdays.length).to.be.equal(5);
+          expect(workdays[0].day).to.be.equal(Date.UTC(2015, 9, 12));
+          done();
+        });
+      });
+    });
+
+    it("shall NOT find a not created workweek", function (done) {
+      var time = Date.UTC(2015, 9, 18);
+
+      Workday.getWorkweek(1, time, function (err, workdays) {
+        expect(err.message).to.be.equal("Workweek does not exist for this user!");
+        expect(workdays.length).to.be.equal(0);
         done();
       });
     });

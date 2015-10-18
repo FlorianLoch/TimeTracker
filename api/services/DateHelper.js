@@ -1,10 +1,11 @@
+const DAY_MS = 36E2 * 1E3 * 24;
+
 module.exports = {
   //xDaysAgo: xDaysAgo,
   weekdaysInWeek: weekdaysInWeek,
-  beginOfDay: beginOfDay
+  beginOfDay: beginOfDay,
+  DAY_MS: DAY_MS
 };
-
-const DAY_MS = 36E2 * 1E3 * 24;
 
 // function xDaysAgo(xDays, time) {
 //   time = time || Date.now();
@@ -47,4 +48,8 @@ function weekdaysInWeek(time) {
   });
 
   return daysInWeek;
+}
+
+function getDayInNextWeek(time) {
+  return time + 7 * DAY_MS;
 }

@@ -5,6 +5,11 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+/*
+  DO NOT CREATE SINGLE DAY-ENTRIES!
+  ONLY CREATE WEEK-WISE BY PROVIDED CLASS METHODS!
+*/
+
 const DEFAULT_WORKHOURS = 0;
 
 module.exports = {
@@ -68,16 +73,45 @@ module.exports = {
     @arg {function} cb Callback, (err, workday)
   */
   getMostRecentWorkday: function (userId, cb) {
+    if (typeof userId === "object") {
+      userId = userId.id;
+    }
+
     Workday.find({
       where: {
         userId: userId
       },
       sort: "day DESC",
       limit: 1
-    }).exec(function (err, workday) {
-      console.log("REACHED");
-      console.log(workday);
-      cb(err, workday[0]);
+    }).exec(function (err, workdays) { //workdays is a list with just one element
+      cb(err, workdays[0]);
+    });
+  },
+  /**
+    @arg {number|Object} userId
+    @arg {number} time UNIX timestamp
+    @arg {function} cb Callback, (err, workdays)
+  */
+  getWorkweek: function (userId, time, cb) {
+    if (typeof userId === "object") {
+      userId = userId.id;
+    }
+
+    var daysInWeek = DateHelper.weekdaysInWeek(time);
+
+    Workday.find({
+      day: daysInWeek,
+      userId: userId
+    }).exec(function (err, workdays) {
+      if (err) {
+        return cb(err);
+      }
+
+      if (workdays.length === 0) {
+        return cb(new Error("Workweek does not exist for this user!"), []);
+      }
+
+      cb(null, workdays);
     });
   }
 };

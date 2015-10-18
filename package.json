@@ -29,7 +29,8 @@
     "debug": "node debug app.js",
     "start": "node app.js",
     "int-test": "export NODE_ENV='testing'; mocha test/bootstrap.test.js test/integration/**/*.test.js",
-    "unit-test": "export NODE_ENV='testing'; mocha test/bootstrap.test.js test/unit/**/*.test.js"
+    "unit-test": "export NODE_ENV='testing'; mocha test/bootstrap.test.js test/unit/**/*.test.js",
+    "test": "npm run int-test && npm run unit-test"
   },
   "main": "app.js",
   "repository": {

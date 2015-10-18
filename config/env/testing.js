@@ -22,7 +22,10 @@ module.exports = {
   },
 
   bootstrap: (cb) => {
-    console.log("===> LAUNCHED IN TESTING MODE!");
+    console.log("        **********************************");
+    console.log("        **===> LAUNCHED IN TESTING MODE!**");
+    console.log("        ** Using testMemoryDb-adapter   **")
+    console.log("        **********************************");
     cb();
   }
 };

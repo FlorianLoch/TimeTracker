@@ -9,22 +9,45 @@ var log = require('captains-log')();
 
 module.exports = {
 	signup: function (req, res) {
+		var startTime = req.body.startTimestamp;
+
+		if (!startTime) {
+			return res.send(400, {
+				msg: "'startTimestamp' needs to be given."
+			});
+		}
+
 		User.create(req.body).exec(function (err, user) {
 			if (err) {
 				log(err);
 				return res.negotiate(err);
 			}
-			res.json(201, {
-				email: user.email,
-				firstName: user.firstName,
-				lastName: user.lastName
+
+			Workday.createWorkweek(user, startTime, function (err) {
+				if (err) {
+					log(err);
+					return res.negotiate(err);
+				}
+
+				_setLoginState(req, user);
+
+				res.json(201, {
+					email: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName
+				});
 			});
 		});
 	},
 	login: function (req, res) {
+		if (req.session.authenticated) {
+			return res.ok();
+		}
+
 		if (!req.body.email || !req.body.password) {
-			res.badRequest();
-			return;
+			return res.badRequest({
+				msg: "'email' and 'password' need to be given!"
+			});
 		}
 
 		User.findOneByEmail(req.body.email).exec(function (err, user) {
@@ -39,15 +62,11 @@ module.exports = {
 					return res.negotiate(err);
 				}
 
-				req.session.authenticated = valid;
-
 				if (!valid) {
 					return res.status(401).send();
 				}
 
-				req.session.me = ["email", "firstName", "lastName"].map(function (key) {
-					return user[key];
-				});
+				_setLoginState(req, user);
 
 				res.ok();
 			});
@@ -59,3 +78,10 @@ module.exports = {
 		res.ok();
 	}
 };
+
+function _setLoginState(req, user) {
+	req.session.authenticated = true;
+	req.session.me = ["email", "firstName", "lastName", "id"].map(function (key) {
+		return user[key];
+	});
+}
