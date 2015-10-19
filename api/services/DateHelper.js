@@ -4,6 +4,7 @@ module.exports = {
   //xDaysAgo: xDaysAgo,
   weekdaysInWeek: weekdaysInWeek,
   beginOfDay: beginOfDay,
+  getDayInNextWeek: getDayInNextWeek,
   DAY_MS: DAY_MS
 };
 

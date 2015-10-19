@@ -14,8 +14,8 @@ module.exports = {
         return cb(err);
       }
 
-      var dayInWeekBefore = workdays[0] - 3 * DateHelper.DAY_MS;
-      var dayInWeekAfter = workdays[4] + 3 * DateHelper.DAY_MS;
+      var dayInWeekBefore = workdays[0].day - 7 * DateHelper.DAY_MS;
+      var dayInWeekAfter = workdays[0].day + 7 * DateHelper.DAY_MS;
 
       Workday.find({
         where: {
@@ -32,7 +32,7 @@ module.exports = {
         var beginOfPrevWeek = null;
 
         if (workdaysInner.length === 1) {
-          if (workdaysInner[0].day < dayInWeekBefore) {
+          if (workdaysInner[0].day === dayInWeekBefore) {
             beginOfPrevWeek = workdaysInner[0].day;
           }
           else {
