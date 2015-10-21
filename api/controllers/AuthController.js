@@ -81,7 +81,8 @@ module.exports = {
 
 function _setLoginState(req, user) {
 	req.session.authenticated = true;
-	req.session.me = ["email", "firstName", "lastName", "id"].map(function (key) {
-		return user[key];
+	req.session.me = {};
+	["email", "firstName", "lastName", "id"].forEach(function (key) {
+		req.session.me[key] = user[key];
 	});
 }

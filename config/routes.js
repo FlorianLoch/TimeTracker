@@ -36,9 +36,13 @@ module.exports.routes = {
     view: 'homepage'
   },
   "post /signup": "AuthController.signup",
-  "/login": "AuthController.login",
-  "/logout": "AuthController.logout",
-  "/me": "UserController.me"
+  "get /login": "AuthController.login",
+  "get /logout": "AuthController.logout",
+  "get /me": "UserController.me",
+  "get /workweek": "TimeTrackingController.getMostRecentWorkweek",
+  "get /workweek/:time": "TimeTrackingController.getWorkweek",
+  "get /workday/:time": "TimeTrackingController.getWorkday",
+  "post /workday/:time": "TimeTrackingController.updateWorkday"
 
   /***************************************************************************
   *                                                                          *
