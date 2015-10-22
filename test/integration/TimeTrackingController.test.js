@@ -1,4 +1,5 @@
 var session = require('supertest-session');
+var request = require("supertest");
 var testHelper = require(__dirname + "/../testHelper");
 
 describe('TimeTrackingController', function() {
@@ -14,9 +15,7 @@ describe('TimeTrackingController', function() {
 
   //Register an user (this also creates an initial workweek)
   before(function (done) {
-    testSession = session(sails.hooks.http.app);
-
-    testSession
+    request(sails.hooks.http.app)
       .post('/signup')
       .send({
         startTimestamp: Date.UTC(2015, 9, 18),
@@ -28,11 +27,24 @@ describe('TimeTrackingController', function() {
       .end(done);
   });
 
+  before(function (done) {
+    testSession = session(sails.hooks.http.app);
+
+    testSession
+      .post("/login")
+      .send({
+        email: "me@example.com",
+        password: "1234"
+      })
+      .expect(200)
+      .end(done);
+  });
+
   describe("updateWorkday", function () {
     it("shall update an exisiting workday", function (done) {
       var day = Date.UTC(2015, 9, 16)
       testSession
-        .post('/workday/' + day)
+        .put('/workday/' + day)
         .send({
           workhours: 4,
           comment: "Oh, that was a looong day!"
@@ -48,7 +60,7 @@ describe('TimeTrackingController', function() {
     it("shall fail updating a not existing workday", function (done) {
       var day = Date.UTC(2015, 9, 18)
       testSession
-        .post('/workday/' + day)
+        .put('/workday/' + day)
         .send({
           workhours: 4,
           comment: "Oh, that was a looong day!"

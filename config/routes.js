@@ -35,14 +35,14 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  "post /signup": "AuthController.signup",
-  "get /login": "AuthController.login",
-  "get /logout": "AuthController.logout",
-  "get /me": "UserController.me",
-  "get /workweek": "TimeTrackingController.getMostRecentWorkweek",
-  "get /workweek/:time": "TimeTrackingController.getWorkweek",
-  "get /workday/:time": "TimeTrackingController.getWorkday",
-  "post /workday/:time": "TimeTrackingController.updateWorkday"
+  "POST /signup": "AuthController.signup",
+  "POST /login": "AuthController.login",
+  "GET /logout": "AuthController.logout",
+  "GET /me": "UserController.me",
+  "GET /workweek": "TimeTrackingController.getMostRecentWorkweek",
+  "GET /workweek/:time": "TimeTrackingController.getWorkweek",
+  "GET /workday/:time": "TimeTrackingController.getWorkday",
+  "PUT /workday/:time": "TimeTrackingController.updateWorkday"
 
   /***************************************************************************
   *                                                                          *

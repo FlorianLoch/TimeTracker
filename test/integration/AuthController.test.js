@@ -61,4 +61,28 @@ describe('AuthController', function() {
     });
   });
 
+  describe("login()", function () {
+    //login with valid credentials is covered by test in TimeTrackingController.test.js
+
+    it("shall fail to login with incomplete request", function (done) {
+      request(sails.hooks.http.app)
+        .post("/login")
+        .send({
+          email: "me@example.com"
+        })
+        .expect(400)
+        .end(done);
+    });
+
+    it("shall fail to login with invalid credentials", function (done) {
+      request(sails.hooks.http.app)
+        .post("/login")
+        .send({
+          email: "me@example.com",
+          password: "12345"
+        })
+        .expect(401)
+        .end(done);
+    });
+  });
 });
