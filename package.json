@@ -34,7 +34,7 @@
     "int-test": "export NODE_ENV='testing'; mocha test/bootstrap.test.js test/integration/**/*.test.js",
     "unit-test": "export NODE_ENV='testing'; mocha test/bootstrap.test.js test/unit/**/*.test.js",
     "test": "npm run int-test && npm run unit-test",
-    "postinstall": "gem install sass"
+    "postinstall": "gem install sass && cd assets/webapp && bower install && echo 'Installation done!'"
   },
   "main": "app.js",
   "repository": {
