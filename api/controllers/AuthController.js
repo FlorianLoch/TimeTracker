@@ -85,4 +85,4 @@ function _setLoginState(req, user) {
 	["email", "firstName", "lastName", "id"].forEach(function (key) {
 		req.session.me[key] = user[key];
 	});
-}
+	}
