@@ -12,7 +12,8 @@
       controller: "WorkweekController"
     }).
     when("/loading",  {
-      templateUrl: "views/loading_view.html"
+      templateUrl: "views/loading_view.html",
+      controller: "InitController"
     }).
     otherwise({
       redirectTo: "/loading"
