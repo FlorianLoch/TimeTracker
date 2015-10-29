@@ -1,3 +1,5 @@
+const HOURS_PER_DAY = 4;
+
 module.exports = {
   /**
     @arg {number|Object} userId
@@ -46,6 +48,35 @@ module.exports = {
 
         cb(null, workdays, beginOfPrevWeek, beginOfNextWeek);
       });
+    });
+  },
+  /**
+    @arg {number|Object} userId
+    @arg {number} time UNIX timestamp, when falsy all entries will be taken into account
+    @arg {function} cb Callback, (err, overtime (might be negative in case of too few workhours))
+  */
+  sumUpWorktime: function (userId, time, cb) {
+    var whereCriteria = {
+      userId: userId
+    };
+
+    if (time) {
+      whereCriteria.day = {
+        "<=": time
+      };
+    }
+
+    Workday.find({where: whereCriteria}).exec(function (err, workdays) {
+      if (err) {
+        return cb(err);
+      }
+
+      var expectedHours = workdays.length * HOURS_PER_DAY;
+      var actualHours = workdays.reduce(function (accu, workday) {
+        return accu + workday.workhours;
+      }, 0);
+
+      cb(null, actualHours - expectedHours);
     });
   }
 };

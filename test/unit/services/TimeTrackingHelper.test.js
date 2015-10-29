@@ -3,6 +3,10 @@ var expect = require('chai').expect;
 var testHelper = require(__dirname + "/../../testHelper");
 
 describe("TimeTrackingHelper", function () {
+    // before(function (done) {
+    //   User.destroy().exec(done);
+    // });
+
   before(function (done) {
     testHelper.createSampleUser(1, done);
   });
@@ -11,7 +15,7 @@ describe("TimeTrackingHelper", function () {
     var time = Date.UTC(2015, 9, 19);
 
     before(function (done) {
-        Workday.destroy().exec(done);
+      Workday.destroy().exec(done);
     });
 
     before(function (done) {
@@ -55,6 +59,32 @@ describe("TimeTrackingHelper", function () {
           expect(beginOfNextWeek).to.be.equal(Date.UTC(2015, 10, 2));
           done();
         });
+      });
+    });
+  });
+
+  describe("sumUpWorktime()", function () {
+    before(function (done) {
+      Workday.destroy().exec(done);
+    });
+
+    before(function (done) {
+      Workday.createWorkweek(1, Date.UTC(2015, 9, 28), done, 5);
+    });
+
+    it("shall sum up the complete week", function (done) {
+      TimeTrackingHelper.sumUpWorktime(1, null, function (err, sum) {
+        expect(err).to.be.null;
+        expect(sum).to.be.equal(5);
+        done();
+      });
+    });
+
+    it("shall sum up only some days of the week", function (done) {
+      TimeTrackingHelper.sumUpWorktime(1, Date.UTC(2015, 9, 28), function (err, sum) {
+        expect(err).to.be.null;
+        expect(sum).to.be.equal(3);
+        done();
       });
     });
   });

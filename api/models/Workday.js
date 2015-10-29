@@ -40,10 +40,15 @@ module.exports = {
     @arg {number|Object} userId
     @arg {number} time UNIX timestamp; the beginning of the belonging week gets computed
     @arg {function} cb Callback, err is the only parameter given
+    @arg {number} defaultWorkhours Parameter for internal testing purposes, defaults to DEFAULT_WORKHOURS
   */
-  createWorkweek: function (userId, time, cb) {
+  createWorkweek: function (userId, time, cb, defaultWorkhours) {
     if (typeof userId === "object") {
       userId = userId.id;
+    }
+
+    if (defaultWorkhours === undefined) {
+      defaultWorkhours = DEFAULT_WORKHOURS;
     }
 
     var weekdays = DateHelper.weekdaysInWeek(time);
@@ -58,7 +63,7 @@ module.exports = {
       Workday.create({
         day: weekdays[index],
         userId: userId,
-        workhours: DEFAULT_WORKHOURS
+        workhours: defaultWorkhours
       }).exec(function (err) {
         if (err) {
           return cb(err);
