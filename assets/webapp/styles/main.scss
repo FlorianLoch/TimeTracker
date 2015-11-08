@@ -1,3 +1,12 @@
+// Taken from http://stackoverflow.com/a/22196760/1339560
 body {
-  font-family: fantasy;
+  background-color: #ddd;
+}
+
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
 }

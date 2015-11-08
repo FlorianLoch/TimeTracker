@@ -74,7 +74,7 @@ describe('AuthController', function() {
         .end(done);
     });
 
-    it("shall fail to login with invalid credentials", function (done) {
+    it("shall fail to login with invalid password", function (done) {
       request(sails.hooks.http.app)
         .post("/login")
         .send({
@@ -82,6 +82,22 @@ describe('AuthController', function() {
           password: "12345"
         })
         .expect(401)
+        .end(done);
+    });
+
+    it("shall fail to login with invalid email too", function (done) {
+      request(sails.hooks.http.app)
+        .post("/login")
+        .send({
+          email: "hoidoi@example.com",
+          password: "12345"
+        })
+        .expect(401)
+        .expect(function (res) {
+          if (res.body.msg !== "No user with this email!") {
+            return new Error();
+          }
+        })
         .end(done);
     });
   });

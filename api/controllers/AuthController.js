@@ -31,11 +31,7 @@ module.exports = {
 
 				_setLoginState(req, user);
 
-				res.json(201, {
-					email: user.email,
-					firstName: user.firstName,
-					lastName: user.lastName
-				});
+				res.json(201, req.session.me);
 			});
 		});
 	},
@@ -56,6 +52,12 @@ module.exports = {
 				return res.negotiate(err);
 			}
 
+			if (!user) {
+				return res.json(401, {
+					msg: "No user with this email!" //Should one return such information?
+				});
+			}
+
 			user.checkPassword(req.body.password, function (err, valid) {
 				if (err) {
 					log(err);
@@ -68,7 +70,7 @@ module.exports = {
 
 				_setLoginState(req, user);
 
-				res.ok();
+				return res.json(200, req.session.me);
 			});
 		});
 	},
@@ -85,4 +87,4 @@ function _setLoginState(req, user) {
 	["email", "firstName", "lastName", "id"].forEach(function (key) {
 		req.session.me[key] = user[key];
 	});
-	}
+}

@@ -1,0 +1,16 @@
+.vertical-center
+  .panel.panel-default.col-sm-offset-2.col-sm-8
+    .panel-body
+      .alert.alert-danger(ng-if="error") {{error}}
+      form.form-horizontal
+        .form-group
+          label.col-sm-3.control-label(for="tf_username") Username/E-mail
+          .col-sm-9
+            input.form-control(type="email",placeholder="E-mail",ng-model="email")#tf_username
+        .form-group
+          label.col-sm-3.control-label(for="tf_password") Password
+          .col-sm-9
+            input.form-control(type="password",placeholder="Password",ng-model="password")#tf_password
+        .form-group
+          .col-sm-offset-3.col-sm-9
+            button.btn.btn-primary(type="submit",ng-click="login()") Login
