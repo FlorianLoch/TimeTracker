@@ -16,6 +16,7 @@ before_script:
 #  - npm install -g istanbul
 #  - npm install -g codeclimate-test-reporter
   - npm install
+  - node --version
 
 script:
   - npm test
