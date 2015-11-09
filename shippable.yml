@@ -12,7 +12,7 @@ build_image: florianloch/shippable_nodejs5_trusty
 #  - secure: DU9ps7hz4euiDNFqo3jE4M4sFs1Pon29rwjc4na2R4zCnahS4Ig7+VySLVBw65mgc5NK1AVcCXgwFI4YNQz5Dgr85s7/IHW39D3qMfhTS20xMqtSBcOz+FExIOtz5yA/K1I3ovEzY0+DllAKsEnuUOuCMAKF0+Y0yaB4WorhzBNL8Zeq+pOIgwSwUhm7GBaRpWiyBFbxSF4zghfJtJQ/LzRON1LBXYOuwXsJZFQvDX7HJw0m3zULiTjTjd6SJ+gxyQURfiikt2OHNDU0WWun1DQuxYzYvfrj1OHP8QXy3S7QxJ3fBidDSlaUc3X0tUymmkfcqTPU3euN6a8i3dfwog==
 
 before_script:
-  - npm install -g mocha
+#  - npm install -g mocha
 #  - npm install -g istanbul
 #  - npm install -g codeclimate-test-reporter
   - npm install
