@@ -15,6 +15,10 @@
       templateUrl: "views/loading_view.html",
       controller: "InitController"
     }).
+    when("/signup",  {
+      templateUrl: "views/signup_view.html",
+      controller: "SignupController"
+    }).
     otherwise({
       redirectTo: "/loading"
     });

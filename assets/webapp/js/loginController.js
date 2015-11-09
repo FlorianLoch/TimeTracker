@@ -1,9 +1,11 @@
 (function () {
-  const LOGIN_URL = "/me";
-
   var mod = angular.module("workTrackingApp");
 
-  mod.controller("LoginController", ["$scope", "accountManager", function ($s, accMan) {
+  mod.controller("LoginController", ["$scope", "accountManager", "$location", function ($s, accMan, $location) {
+    $s.goToSignUpPage = function () {
+      $location.path("/signup");
+    };
+
     $s.login = function () {
       accMan.login($s.email, $s.password).then(function success (res) {
         $location.path("/workweek");
