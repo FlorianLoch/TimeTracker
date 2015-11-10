@@ -19,7 +19,13 @@ module.exports = {
 function beginOfDay(time) {
   time = time || Date.now();
 
-  if (time instanceof Date) time = time.valueOf();
+  if (typeof time === "string") {
+    time = parseInt(time);
+  }
+
+  if (time instanceof Date) {
+    time = time.valueOf();
+  }
 
   date = new Date(time);
   return time - 36E5 * date.getUTCHours() - 6E4 * date.getUTCMinutes() - 1E3 * date.getUTCSeconds() - date.getUTCMilliseconds();
@@ -27,6 +33,10 @@ function beginOfDay(time) {
 
 function weekdaysInWeek(time) {
   time = time || Date.now();
+
+  if (typeof time === "string") {
+    time = parseInt(time);
+  }
 
   if (time instanceof Date) {
     time = time.valueOf();

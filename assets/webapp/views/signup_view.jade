@@ -10,18 +10,21 @@
         .form-group
           label.col-sm-3.control-label(for="tf_password") Password
           .col-sm-9
-            input.form-control.col-sm-4(type="password",placeholder="Password",ng-model="password")#tf_password
-            input.form-control.col-sm-4(type="password",placeholder="Repeat password",ng-model="password2")
+              .row
+                .col-sm-6
+                  input.form-control(type="password",placeholder="Password",ng-model="password")#tf_password
+                .col-sm-6
+                  input.form-control.col-sm-5(type="password",placeholder="Repeat password",ng-model="password2")
         .form-group
-          label.col-sm-3.control-label(for="tf_firstname") E-mail
+          label.col-sm-3.control-label(for="tf_firstname") Firstname
           .col-sm-9
             input.form-control(type="text",placeholder="Firstname",ng-model="firstName")#tf_firstname
         .form-group
-          label.col-sm-3.control-label(for="tf_lastname") E-mail
+          label.col-sm-3.control-label(for="tf_lastname") Lastname
           .col-sm-9
             input.form-control(type="text",placeholder="Lastname",ng-model="lastName")#tf_lastname
         .form-group
-          label.col-sm-3.control-label(for="tf_starttime") E-mail
+          label.col-sm-3.control-label(for="tf_starttime") Starttime
           .col-sm-9
             input.form-control(type="text",placeholder="Starttime",ng-model="startTime")#tf_starttime
         .form-group

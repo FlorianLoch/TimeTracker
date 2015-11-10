@@ -15,7 +15,7 @@ describe('AuthController', function() {
       request(sails.hooks.http.app)
         .post('/signup')
         .send({
-          startTimestamp: Date.UTC(2015, 9, 18),
+          startTimestamp: "" + Date.UTC(2015, 9, 18),
           email: "me@example.com",
           firstName: "Karl",
           lastName: "Napp",

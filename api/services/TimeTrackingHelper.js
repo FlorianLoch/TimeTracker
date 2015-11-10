@@ -60,6 +60,10 @@ module.exports = {
       userId: userId
     };
 
+    if (typeof time === "string") {
+      time = parseInt(time);
+    }
+
     if (time) {
       whereCriteria.day = {
         "<=": time

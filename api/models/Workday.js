@@ -47,6 +47,10 @@ module.exports = {
       userId = userId.id;
     }
 
+    if (typeof time === "string") {
+      time = parseInt(time);
+    }
+
     if (defaultWorkhours === undefined) {
       defaultWorkhours = DEFAULT_WORKHOURS;
     }
@@ -100,6 +104,10 @@ module.exports = {
   getWorkweek: function (userId, time, cb) {
     if (typeof userId === "object") {
       userId = userId.id;
+    }
+
+    if (typeof time === "string") {
+      time = parseInt(time);
     }
 
     var daysInWeek = DateHelper.weekdaysInWeek(time);
