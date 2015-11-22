@@ -21,7 +21,12 @@ describe('AuthController', function() {
           lastName: "Napp",
           password: "1234"
         })
-        .expect(201, done);
+        .expect(201)
+        .expect((res) => {
+          //Expect a csrfToken as part of the return message
+          if (res.body.csrfToken.length <= 0) return new Error("Missing csrfToken!");
+        })
+        .end(done);
     });
 
     it("shall NOT create a new user account when information (lastName) is missing", function (done) {

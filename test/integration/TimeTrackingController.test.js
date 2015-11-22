@@ -4,6 +4,8 @@ var testHelper = require(__dirname + "/../testHelper");
 
 describe('TimeTrackingController', function() {
   var testSession;
+  var csrfToken;
+  const CSRF_HEADER_NAME = "sails-csrf-token";
 
   before(function (done) {
     User.destroy().exec(done);
@@ -37,6 +39,14 @@ describe('TimeTrackingController', function() {
         password: "1234"
       })
       .expect(200)
+      .expect((res) => {
+        //Expect a csrfToken as part of the return message
+        if (res.body.csrfToken.length <= 0) return new Error("Missing csrfToken!");
+      })
+      .expect((res) => {
+        //Store csrfToken in header to enable authentification for further requests made by this instance
+        csrfToken = res.body.csrfToken;
+      })
       .end(done);
   });
 
@@ -45,6 +55,7 @@ describe('TimeTrackingController', function() {
       var day = Date.UTC(2015, 9, 16)
       testSession
         .put('/workday/' + day)
+        .set(CSRF_HEADER_NAME, csrfToken)
         .send({
           workhours: 4,
           comment: "Oh, that was a looong day!"
@@ -61,6 +72,7 @@ describe('TimeTrackingController', function() {
       var day = Date.UTC(2015, 9, 18)
       testSession
         .put('/workday/' + day)
+        .set(CSRF_HEADER_NAME, csrfToken)
         .send({
           workhours: 4,
           comment: "Oh, that was a looong day!"

@@ -6,6 +6,7 @@
  */
 
 var log = require('captains-log')();
+var uuid = require('node-uuid');
 
 module.exports = {
 	signup: function (req, res) {
@@ -87,4 +88,7 @@ function _setLoginState(req, user) {
 	["email", "firstName", "lastName", "id"].forEach(function (key) {
 		req.session.me[key] = user[key];
 	});
+
+	//csrfToken
+	req.session.me.csrfToken = uuid.v4();
 }

@@ -9,9 +9,14 @@
  */
 module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
+  // User is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
   if (req.session.authenticated) {
+    var csrfToken = req.headers["sails-csrf-token"];
+    if (req.session.me.csrfToken !== csrfToken) {
+      return res.forbidden('You are not permitted to perform this action. You need to possess a valid csrfToken!');
+    }
+
     return next();
   }
 
